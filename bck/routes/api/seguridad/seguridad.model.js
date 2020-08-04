@@ -17,7 +17,7 @@ module.exports = (db)=>{
     seguridadCollection.indexExists("userEmail_1", (err, rslt)=>{
         if(!rslt){
           seguridadCollection.createIndex(
-            { userEmail: 1 },
+            { useremail: 1 },
             { unique: true, name:"userEmail_1"},
             (err, rslt)=>{
               console.log(err, rslt);
@@ -30,9 +30,9 @@ module.exports = (db)=>{
   }
 
   var userTemplate = {
-    userEmail: "",
-    userPswd: "",
-    userCompleteName: "",
+    useremail: "",
+    userpswd: "",
+    usernames: "",
     userDateCreated: null
   }
   seguridadModel.getAll = (handler)=>{
@@ -47,9 +47,9 @@ module.exports = (db)=>{
       {},
       userTemplate,
       {
-        userEmail: useremail,
-        userPswd: pswdGenerator(userpswd),
-        userCompleteName: usernames,
+        useremail: useremail,
+        userpswd: pswdGenerator(userpswd),
+        usernames: usernames,
         userDateCreated: new Date().getTime()
       }
     );
@@ -67,8 +67,8 @@ module.exports = (db)=>{
     var query = { "_id": new ObjectID(_id)};
     var updateCommad = {
       "$set":{
-        userPswd: pswdGenerator(userpswd),
-        userCompleteName: usernames,
+        userpswd: pswdGenerator(userpswd),
+        usernames: usernames,
         lastUpdated: new Date().getTime()
       },
       "$inc" :{
@@ -102,9 +102,7 @@ module.exports = (db)=>{
 
   seguridadModel.getById = (id, handler) => {
     var query = { "_id": new ObjectID(id) };
-    seguridadCollection.findOne(
-      query,
-      (err, doc) => {
+    seguridadCollection.findOne(query,(err, doc) => {
         if (err) {
           return handler(err, null);
         }
@@ -118,8 +116,8 @@ module.exports = (db)=>{
   }
 
   seguridadModel.getByEmail = (email, handler)=>{
-    var query = {"userEmail":email};
-    var projection = { "userEmail": 1, "userPswd": 1, "userCompleteName":1};
+    var query = {"useremail":email};
+    var projection = { "useremail": 1, "userpswd": 1, "usernames":1};
     seguridadCollection.findOne(
       query,
       {"projection":projection},

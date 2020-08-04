@@ -7,7 +7,7 @@
 
 var MongoClient = require('mongodb').MongoClient;
 var MongoUri = 'mongodb://127.0.0.1:27017';
-var MongoDB = 'ProyectoFinal';
+var MongoDB = 'RecolectaHN';
 var MongoOpt = { useUnifiedTopology: true };
 
 

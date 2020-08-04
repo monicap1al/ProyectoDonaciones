@@ -31,7 +31,7 @@ router.get('/empresa/:id',(req, res)=>{
 });
 
 // http://localhost:3000/api/empresa/empresa/new
-router.post('empresa/new', (req, res)=>{
+router.post('/empresa/new', (req, res)=>{
   var datosEnviados = req.body;
   // var newUser = userModel.addNew(datosEnviados);
   // return res.status(200).json(newUser);

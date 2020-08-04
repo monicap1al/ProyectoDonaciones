@@ -33,8 +33,9 @@ export default class Footer extends Component{
         <footer>
           <nav>
             <ul>
-              <li><NavLink to="/"><IoIosHome />Home</NavLink></li>
-              <li><NavLink to="/platillos"><IoIosFolder /> Platillos</NavLink></li>
+              <li><NavLink to="/home2"><IoIosHome />Home</NavLink></li>
+              <li><NavLink to="/registro"><IoIosFolder/> Registro</NavLink></li>
+              <li><NavLink to="/donaciones"><IoIosFolder /> Donaciones</NavLink></li>
               <li><a onClick={this.logoutOnClick}><IoIosLogIn /> Logout</a></li>
             </ul>
           </nav>
@@ -56,23 +57,3 @@ export default class Footer extends Component{
   }
 }
 
-/*
-Un componente en clase tiene de forma predeterminada
-un conjunto de eventos que se ejecutan en distintos
-puntos del ciclo de vida de un componente.
-
-construye
-
-mount
-
-disponible
-
-actualizacion
-
-desmonta
-
-destruye
-
-
-
- */

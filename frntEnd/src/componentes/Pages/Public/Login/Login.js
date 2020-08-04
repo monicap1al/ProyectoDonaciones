@@ -4,15 +4,9 @@ import Field from '../../../Forms/Fields/Field';
 import {Actions} from '../../../Forms/Buttons/Button';
 import {emailRegex , emptyRegex} from '../../../Forms/Validators/Validators';
 
-import {paxios, setLocalStorage} from '../../../Utilities/Utilities';
+import {paxios} from '../../../Utilities/Utilities';
 import {Redirect} from 'react-router-dom';
 export default class Login extends Component{
-  /*
-  1) Capturar los eventos de los botones
-  2) Repasar el evento para capturar los datos del formulario
-  3) Validaciones de Datos y como desplegarlo en el componente
-  4) Usar axios para llegar al API.
-   */
   constructor(){
     super();
     this.state = {
@@ -55,7 +49,6 @@ export default class Login extends Component{
   }
   onChangeHandler(e){
     const  {name, value} = e.currentTarget;
-    // Aqui puedo validar datos y establecer elementos de error.
     let errors = this.validate({[name]:value});
     if (!errors){
       errors = {[name+"Error"]:''};
@@ -69,24 +62,21 @@ export default class Login extends Component{
   onClickLogin(e){
     e.preventDefault();
     e.stopPropagation();
-    //Validaciones
     const errors = this.validate(this.state);
     if(errors){
       this.setState({...this.state, ...errors});
     } else {
-        //Aplicar Axios
         alert(JSON.stringify(this.state));
         const {email, password} = this.state;
         paxios.post(
           "/api/seguridad/login",
           {
-            userEmail: email,
-            userPswd: password
+            useremail: email,
+            userpswd: password
           }
         )
         .then((resp)=>{
           console.log(resp.data);
-          // Componente de Orden Superior los Datos del Usuario
           this.props.login(resp.data);
           this.setState({...this.state, redirecTo: true })
         })
@@ -126,7 +116,6 @@ export default class Login extends Component{
         />
         <Actions>
           <button onClick={this.onClickLogin}>Iniciar Sesión</button>
-          <button onClick={this.onClickCreateAccount}>Crear Cuenta</button>
         </Actions>
       </Page>
     );

@@ -3,10 +3,10 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 
 function initSeguridad (db) {
-var userModel = require('./platillos.model')(db);
+var userModel = require('./DonacionModel')(db);
 
 
-router.get('/platillos/:id',(req, res)=>{
+router.get('/one/:id',(req, res)=>{
     var id =  req.params.id ;
     userModel.getById(id, (err, doc)=>{
       if(err){
@@ -17,7 +17,7 @@ router.get('/platillos/:id',(req, res)=>{
     });// getBYId
 });
 
-router.get('/platillos/all',(req, res)=>{
+router.get('/all',(req, res)=>{
     userModel.getAll((err, doc)=>{
       if(err){
         console.log(err);
@@ -26,7 +26,7 @@ router.get('/platillos/all',(req, res)=>{
       return res.status(200).json(doc);
     });// getAll
 });
-
+/*
 router.put('/platillos/stock/:id' , (req, res)=>{
     var { stock : _stockDelta } = req.body;
     var stockDelta = 0;
@@ -72,7 +72,7 @@ router.get('/platillos/categoria/all',(req, res)=>{
       }
       return res.status(200).json(doc);
     });// getBYId
-});
+});*/
 
 // http://localhost:3000/api/platillos/new
 router.post('/new', (req, res)=>{
@@ -123,7 +123,7 @@ router.put('/desc/:id', (req, res)=>{
 });
 
 
-router.delete('/users/del/:id', (req, res)=>{
+router.delete('/del/:id', (req, res)=>{
   var id = req.params.id;
   userModel.deleteByCode(id, (err, deletedDoc)=>{
     if(err){
@@ -135,12 +135,12 @@ router.delete('/users/del/:id', (req, res)=>{
 });//delete
 
 //Nueva funcion (page dentro de front)
-router.get('/platillos/:page/:items', (req, res)=>{
+router.get('/facet/:page/:items', (req, res)=>{
     var {page, items} = req.params;
     userModel.getProductByFilter(
       parseInt(page),
       parseInt(items),
-      "sku",
+      "id",
       (err, rslt)=>{
         if(err){
           return res.status(500).json({});

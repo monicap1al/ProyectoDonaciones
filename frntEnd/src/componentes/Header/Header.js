@@ -7,8 +7,8 @@ export default ( {children, title, login} )=>{
       finalLogin(
         e,
         {
-          email:"TEGMEALS",
-          id: "TegMeals",
+          email:"RECOLECTAHN",
+          id: "RecolectaHN",
           roles:["public","admin"]
         })}
   }>{title} {children}</h1>);

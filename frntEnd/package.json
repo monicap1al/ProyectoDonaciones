@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.1.2",
     "async": "^3.2.0",
     "axios": "^0.19.2",
+    "bcrypt": "^5.0.0",
     "brcypt": "^1.0.1",
     "dotenv": "^8.2.0",
     "exif-js": "^2.3.0",

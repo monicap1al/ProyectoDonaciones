@@ -100,7 +100,7 @@ export default class Login extends Component {
   }
   render() {
     return (
-      <Page pageTitle="Nueva Cuenta" auth={this.props.auth}>
+      <Page pageTitle="Registrar" auth={this.props.auth}>
         <Field
           name="userName"
           caption="Nombre Completo"

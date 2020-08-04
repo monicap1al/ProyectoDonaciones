@@ -5,7 +5,7 @@ normalAxios.defaults.headers.common['cache-control'] = "no-cache";
 normalAxios.defaults.headers.post['Content-Type'] = "no-cache";
 normalAxios.defaults.headers.put['Content-Type'] = "no-cache";
 
-export const paxios = normalAxios; // Axios For Public API
+export const paxios = normalAxios;
 
 let secureAxios = axios.create();
 secureAxios.defaults.headers.common['cache-control'] = "no-cache";

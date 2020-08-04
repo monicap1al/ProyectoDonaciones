@@ -10,25 +10,23 @@ function pswdGenerator( pswdRaw ){
 
 module.exports = (db)=>{
   var seguridadModel = {}
-  var seguridadCollection = db.collection("platillos");
+  var seguridadCollection = db.collection("Donaciones");
 
   var foodTemplate = {
-    sku:"",
-    DescCorta: "",
-    DescLong: "",
-    Precio: "",
-    Categoria: "",
-    Empresa:"",
-    Estado:"",
+    id:"",
+    NombreCompleto: "",
+    Telefono: "",
+    Direccion: "",
+    Donacion: "",
     userDateCreated: null
   }
 
   seguridadModel.getAll = (handler)=>{
-    // handler(err, docs)
-    var projection = {"sku":1,"DescCorta": 1, "DescLong": 1, "Precio":1, "Categoria":1};
+    var projection = {"id":1,"NombreCompleto": 1, "Telefono": 1, "Direccion":1, "Donacion":1};
     seguridadCollection.find({projection:projection}).toArray(handler);
   }
 
+  /*
   seguridadModel.getAllEmpresa = (empresa, handler)=>{
     // handler(err, docs)
     var projection = { "DescCorta": 1, "DescLong": 1, "Precio":1, "Categoria":1};
@@ -44,22 +42,19 @@ module.exports = (db)=>{
   seguridadModel.getAllTipos = (handler)=>{
     // handler(err, docs)
     seguridadCollection.distinct("Categoria").toArray(handler);
-  }
+  }*/
 
   seguridadModel.addNew = (dataToAdd, handler)=>{
-      //handler(err, addedDocument)
-    var {sku,desccorta, desclong, precio, categoria, empresa, estado} = dataToAdd;
+    var {id, NombreCompleto, Telefono, Direccion, Donacion} = dataToAdd;
     var userToAdd = Object.assign(
       {},
       foodTemplate,
       {
-        sku: sku,
-        DescCorta: desccorta,
-        DescLong: desclong,
-        Precio: precio,
-        Categoria: categoria,
-        Empresa:empresa,
-        Estado:estado,
+        id:id,
+        NombreCompleto: NombreCompleto,
+        Telefono: Telefono,
+        Direccion: Direccion,
+        Donacion: Donacion,
         userDateCreated: new Date().getTime()
       }
     );
@@ -73,14 +68,14 @@ module.exports = (db)=>{
   }
 
   seguridadModel.update = ( dataToUpdate , handler )=>{
-    var { _id, desccorta, desclong, precio, categoria} = dataToUpdate;
+    var { _id, NombreCompleto, Telefono, Direccion, Donacion} = dataToUpdate;
     var query = { "_id": new ObjectID(_id)};
     var updateCommad = {
       "$set":{
-        DescCorta: desccorta,
-        DescLong: desclong,
-        Precio: precio,
-        Categoria: categoria,
+        NombreCompleto: NombreCompleto,
+        Telefono: Telefono,
+        Direccion: Direccion,
+        Donacion: Donacion,
         lastUpdated: new Date().getTime()
       },
       "$inc" :{
@@ -156,6 +151,7 @@ module.exports = (db)=>{
     return bcrypt.compareSync(raw, hash);
   }
 
+  /*
   seguridadModel.getByEmpresa = (empresa, handler)=>{
     var query = {"Empresa":empresa};
     var projection = { "DescCorta": 1, "DescLong": 1, "Precio":1, "Categoria":1};
@@ -169,13 +165,14 @@ module.exports = (db)=>{
         return handler(null, user);
       }
     )
-  }
+  }*/
 
+  
   seguridadModel.getProductByFilter = async (_page, _itemsPerPage, _sortBy, handler) => {
     var page = _page || 1;
     var itemsPerPage = _itemsPerPage || 10;
-    var sortBy = _sortBy || "sku";
-    var options = { "sku": 1, "DescCorta": 1, "DescLong": 1, "Precio": 1, "Categoria": 1};
+    var sortBy = _sortBy || "id";
+    var options = { "id": 1, "NombreCompleto": 1, "Telefono": 1, "Direccion": 1, "Donacion": 1};
     let cursor = seguridadCollection.find().limit(itemsPerPage);
     let totalProds = await cursor.count();
     cursor.toArray((err, docs) => {
@@ -188,7 +185,7 @@ module.exports = (db)=>{
 
     });
   };
-
+/*
   seguridadModel.addStockToProduct = (id, stockAmount, handler) => {
     var filter = {"_id": new ObjectID(id)};
     var updateCmd = {"$inc": {"stock": stockAmount}};
@@ -200,7 +197,7 @@ module.exports = (db)=>{
           return handler(null, rslt.value);
         }
     })
-  }; //addStockToProduct
+  }; //addStockToProduct*/
 
   return seguridadModel;
 }

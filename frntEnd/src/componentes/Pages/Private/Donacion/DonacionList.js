@@ -19,7 +19,7 @@ export default class Platillos extends Component {
  }
  loadMore(page){
    const items  = this.state.itemsToLoad;
-   const uri = `/api/platillos/platillos/${page}/${items}`;
+   const uri = `/api/donaciones/facet/${page}/${items}`;
    saxios.get(uri)
      .then(
        ({data})=>{
@@ -50,10 +50,11 @@ export default class Platillos extends Component {
     (item)=>{
       return (
         <div className='listItem' key={item._id}>
-          <span>{item.sku} {item.DescCorta}</span>
-          <span>{item.DescLong}</span>
-          <span>{item.Precio}</span>
-          <span>{item.Empresa}</span>
+          <span>{item.id}</span>
+          <span>{item.NombreCompleto}</span>
+          <span>{item.Telefono}</span>
+          <span>{item.Direccion}</span>
+          <span>{item.Donacion}</span>
           <span className='updateListItem'>
             <Link to={`/platillos/${item._id}`}>
               <IoIosInformationCircleOutline size='2em'/>
@@ -73,7 +74,7 @@ export default class Platillos extends Component {
     </div>);
 
   return (
-    <Page pageTitle="Platillos" auth={this.props.auth}>
+    <Page pageTitle="Realiza tu donación" auth={this.props.auth}>
       <div className="list" ref={(ref)=> this.scrollParentRef = ref}>
           <InfiniteScroll
             pageStart={0}

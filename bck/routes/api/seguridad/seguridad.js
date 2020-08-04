@@ -90,21 +90,21 @@ router.delete('/users/del/:id', (req, res)=>{
 
 
 router.post('/login', (req, res)=>{
-  var {userEmail, userPswd} = req.body;
-  userModel.getByEmail(userEmail, (err,user)=>{
+  var {useremail, userpswd} = req.body;
+  userModel.getByEmail(useremail, (err,user)=>{
     if(err){
       console.log(err);
       return res.status(400).json({"msg":"Credencales no pueden ser validadas"});
     }
-    if (userModel.comparePswd(user.userPswd, userPswd)){
-      delete user.userPswd;
+    if (userModel.comparePswd(user.userpswd, userpswd)){
+      delete user.userpswd;
       var token =  jwt.sign(user,
       'cuandoLosGatosNoEstanFiestanlosRatonesHacen',
-      {expiresIn:'60m'}
+      {expiresIn:'1600m'}
       )
       return res.status(200).json({"user":user, "jwt":token});
     }
-    console.log({ userEmail, userPswd, ...{ "msg":"No Coincide Pswds"}});
+    console.log({ useremail, userpswd, ...{ "msg":"No Coincide Pswds"}});
     return res.status(400).json({ "msg": "Credencales no pueden ser validadas" });
   });//getByEmail
 });// post login

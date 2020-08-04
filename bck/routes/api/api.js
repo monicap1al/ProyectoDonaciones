@@ -1,9 +1,3 @@
-
-/// rutas -> router ->  app : express
-
-/// rutas -> router:entidad -> router:api -> app:express
-
-
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
@@ -29,17 +23,16 @@ passport.use(
 
 function initApi(db){
 
-    /// Routers de Entidades
     var seguridadRouter = require('./seguridad/seguridad')(db);
     var empresaRouter = require('./empresa/empresa')(db);
     var consumerRouter = require('./consumer/consumer')(db);
-    var foodRouter = require('./platillos/platillos')(db);
+    var foodRouter = require('./Donaciones/Donacion')(db);
 
 
     router.use('/seguridad', seguridadRouter);
     router.use('/empresa', empresaRouter);
     router.use('/consumer', consumerRouter);
-    router.use('/platillos', foodRouter);
+    router.use('/donaciones', foodRouter);
 
     var jwtAuthMiddleware = passport.authenticate('jwt',{session:false});
 
@@ -49,27 +42,7 @@ function initApi(db){
     } );
  return router;
 }
-//module.exports = router;
+
 module.exports = initApi;
 
-/*
-// Estructura de un Módulo y uso de module.exports para
-// exponer la funcionalidad del módulo.
 
-
-var libLencaFunctions = {}; //JSON Javascript Object Notation
-
-libLencaFunctions.mensaje = "Hola Mundo";
-libLencaFunctions.version = "v1.0";
-libLencaFunctions.sayHello = ()=>{
-  console.log("Hello!");
-} // ES6
-
-//
-//libLencaFunctions.sayHello = function(){
-//  console.log("Hello");
-//}
-//
-
-module.exports = libLencaFunctions;
-*/
